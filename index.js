@@ -1,8 +1,8 @@
 // runs application using imports from lib
-const { readFile, writeFile } = require('fs/promises');
-const Shape = require('./lib/shapes');
+const {Triangle,Circle,Square} = require('./lib/shapes');
 const inquirer = require('inquirer');
-
+const fs = require("fs/promises");
+const { log } = require('console');
 const questions = [
     {
         type: 'input',
@@ -12,18 +12,38 @@ const questions = [
     {
         type: 'input',
         message: 'Enter text color (color keyword or hexadecimal number)',
-        name: 'text-color',
+        name: 'textColor',
     },
     {
         type: 'list',
         message: 'Choose a shape',
         choices: ['circle', 'triangle', 'square'],
-        name: 'chosen-shape',
+        name: 'chosenShape',
     },
     {
         type: 'input',
         message: 'Enter shape color (color keyword or hexadecimal number)',
-        name: 'shape-color',
+        name: 'shapeColor',
     },
 ];
 
+function init() {
+inquirer.prompt(questions).then(answers => {
+    let shape;
+    switch (answers.chosenShape) {
+        case 'circle':
+            shape = new Circle(answers.text, answers.textColor, answers.shapeColor);
+            break;
+        case 'triangle':
+            shape = new Triangle(answers.text, answers.textColor, answers.shapeColor);
+            break;
+        case 'square':
+            shape = new Square(answers.text, answers.textColor, answers.shapeColor);
+            break;
+    }      
+        const svgContent = shape.renderSVG();    
+        fs.writeFile('logo.svg', svgContent).then(() => console.log('Generated logo.svg')).catch(err => console.log(err));
+    })
+}
+
+init()
