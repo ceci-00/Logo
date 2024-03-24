@@ -17,7 +17,7 @@ const questions = [
     {
         type: 'list',
         message: 'Choose a shape',
-        choices: ['circle', 'triangle', 'square'],
+        choices: ['Circle', 'Triangle', 'Square'],
         name: 'chosenShape',
     },
     {
@@ -29,19 +29,18 @@ const questions = [
 
 function init() {
 inquirer.prompt(questions).then(answers => {
-    let shape;
-    switch (answers.chosenShape) {
-        case 'circle':
-            shape = new Circle(answers.text, answers.textColor, answers.shapeColor);
-            break;
-        case 'triangle':
-            shape = new Triangle(answers.text, answers.textColor, answers.shapeColor);
-            break;
-        case 'square':
-            shape = new Square(answers.text, answers.textColor, answers.shapeColor);
-            break;
-    }      
-        const svgContent = shape.renderSVG();    
+    let shapeChoice;
+    if (answers.chosenShape === "Circle") {
+        shapeChoice = new Circle(answers.text, answers.textColor, answers.shapeColor);
+    } else if (answers.chosenShape === "Triangle") {
+        shapeChoice = new Triangle(answers.text, answers.textColor, answers.shapeColor);
+    } else if (answers.chosenShape === "Square") {
+        shapeChoice = new Square(answers.text, answers.textColor, answers.shapeColor);
+    } else {
+        console.log("Invalid shape type.");
+    }
+          
+    const svgContent = shapeChoice.renderSVG();    
         fs.writeFile('logo.svg', svgContent).then(() => console.log('Generated logo.svg')).catch(err => console.log(err));
     })
 }
