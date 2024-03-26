@@ -1,8 +1,10 @@
-// runs application using imports from lib
+// importing shapes from lib directory
 const {Triangle,Circle,Square} = require('./lib/shapes');
+// importing inquirer for user prompts and fs promises for file system ops
 const inquirer = require('inquirer');
 const fs = require("fs/promises");
 const { log } = require('console');
+// questions for user prompts
 const questions = [
     {
         type: 'input',
@@ -26,10 +28,12 @@ const questions = [
         name: 'shapeColor',
     },
 ];
-
+// initializes application
 function init() {
+    // prompts user w/questions and handles answers
 inquirer.prompt(questions).then(answers => {
     let shapeChoice;
+    // creates selected shape base on user input
     if (answers.chosenShape === "Circle") {
         shapeChoice = new Circle(answers.text, answers.textColor, answers.shapeColor);
     } else if (answers.chosenShape === "Triangle") {
@@ -37,12 +41,14 @@ inquirer.prompt(questions).then(answers => {
     } else if (answers.chosenShape === "Square") {
         shapeChoice = new Square(answers.text, answers.textColor, answers.shapeColor);
     } else {
+        // handles invalid shape type
         console.log("Invalid shape type.");
     }
-          
+    // generates SVG content for selected shape      
     const svgContent = shapeChoice.renderSVG();    
+    // writes SVG content to file named 'logo.svg'
         fs.writeFile('logo.svg', svgContent).then(() => console.log('Generated logo.svg')).catch(err => console.log(err));
     })
 }
-
+// calling init function to start app
 init()
