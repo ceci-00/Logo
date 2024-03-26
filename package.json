@@ -1,0 +1,26 @@
+{
+  "name": "logo",
+  "version": "1.0.0",
+  "description": "uses user input to create an svg file that renders a logo",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceci-00/Logo.git"
+  },
+  "author": "Ceci Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ceci-00/Logo/issues"
+  },
+  "homepage": "https://github.com/ceci-00/Logo#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "validate-color": "^2.2.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
